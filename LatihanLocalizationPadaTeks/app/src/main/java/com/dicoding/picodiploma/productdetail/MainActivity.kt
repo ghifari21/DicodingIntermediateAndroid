@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.dicoding.picodiploma.productdetail.Helper.withCurrencyFormat
+import com.dicoding.picodiploma.productdetail.Helper.withDateFormat
+import com.dicoding.picodiploma.productdetail.Helper.withNumberingFormat
 import com.dicoding.picodiploma.productdetail.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
+        setupData()
     }
 
     private fun setupView() {
@@ -38,6 +42,47 @@ class MainActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.settingImageView.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
+    }
+
+    private fun setupData() {
+        val data = RemoteDataSource(this)
+        val product = data.getDetailProduct()
+        product.apply {
+            binding.apply {
+                previewImageView.setImageResource(image)
+                nameTextView.text = name
+                storeTextView.text = store
+                colorTextView.text = color
+                sizeTextView.text = size
+                descTextView.text = desc
+                priceTextView.text = price.withCurrencyFormat()
+                dateTextView.text = getString(R.string.dateFormat, date.withDateFormat())
+                ratingTextView.text = getString(
+                    R.string.ratingFormat,
+                    rating.withNumberingFormat(),
+                    countRating.withNumberingFormat()
+                )
+            }
+        }
+
+        setupAccessbility(product)
+    }
+
+    private fun setupAccessbility(productModel: ProductModel) {
+        productModel.apply {
+            binding.apply {
+                settingImageView.contentDescription = getString(R.string.settingDescription)
+                previewImageView.contentDescription = getString(R.string.previewDescription)
+                colorTextView.contentDescription = getString(R.string.colorDescription, color)
+                sizeTextView.contentDescription = getString(R.string.sizeDescription, size)
+                ratingTextView.contentDescription = getString(
+                    R.string.ratingDescription,
+                    rating.withNumberingFormat(),
+                    countRating.withNumberingFormat()
+                )
+                storeTextView.contentDescription = getString(R.string.storeDescription, store)
+            }
         }
     }
 }
