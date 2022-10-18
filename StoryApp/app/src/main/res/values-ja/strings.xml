@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="title_login">ログイン</string>
+    <string name="logo">ロゴ</string>
+    <string name="hint_email">メールアドレス</string>
+    <string name="empty_email">メールアドレスを入力してください</string>
+    <string name="invalid_email">有効なEメールアドレスを入力してください</string>
+    <string name="hint_password">パスワード</string>
+    <string name="invalid_password">パスワードは8文字以上であること</string>
+    <string name="title_register">レジスタ</string>
+    <string name="hint_name">フルネーム</string>
+    <string name="success">成功!</string>
+    <string name="account_created">アカウントが作成されました。</string>
+    <string name="login_success">ログインに成功しました。</string>
+    <string name="to_homepage">ホームページに戻る</string>
+    <string name="empty_field">この欄は必ず入力してください</string>
+    <string name="loading">ローディング</string>
+    <string name="title_name">名前</string>
+    <string name="title_description">説明</string>
+    <string name="title_logout">ログアウト</string>
+    <string name="title_camera">カメラ</string>
+    <string name="title_gallery">ギャラリー</string>
+    <string name="title_upload">アップロード</string>
+    <string name="title_add_story">新話を追加する</string>
+    <string name="title_detail_story">ディテールストーリー</string>
+    <string name="empty_image">最初に画像ファイルを入力してください。</string>
+    <string name="success_upload">ストーリーが正常にアップロードされました。</string>
+</resources>
