@@ -1,9 +1,12 @@
 package com.dicoding.mystudentdata.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.AutoMigrationSpec
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.dicoding.mystudentdata.helper.InitialDataSource
 import kotlinx.coroutines.CoroutineScope
@@ -11,12 +14,18 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [Student::class, University::class, Course::class, CourseStudentCrossRef::class],
-    version = 1,
-    exportSchema = false
+    version = 2,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2, spec = StudentDatabase.MyAutoMigration::class)
+    ],
+    exportSchema = true
 )
 abstract class StudentDatabase : RoomDatabase() {
 
     abstract fun studentDao(): StudentDao
+
+    @RenameColumn(tableName = "University", fromColumnName = "name", toColumnName = "universityName")
+    class MyAutoMigration : AutoMigrationSpec
 
     companion object {
         @Volatile
@@ -32,7 +41,7 @@ abstract class StudentDatabase : RoomDatabase() {
                     )
                         .fallbackToDestructiveMigration()
                         .createFromAsset("student_database.db")
-                            // Callback
+                        // Callback
 //                        .addCallback(object : Callback() {
 //                            override fun onCreate(db: SupportSQLiteDatabase) {
 //                                super.onCreate(db)
