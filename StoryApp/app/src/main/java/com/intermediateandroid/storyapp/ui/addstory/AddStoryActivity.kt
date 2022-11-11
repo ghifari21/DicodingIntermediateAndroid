@@ -59,7 +59,7 @@ class AddStoryActivity : AppCompatActivity() {
     ) {
         if (it.resultCode == RESULT_OK) {
             val selectedImg: Uri = it?.data?.data as Uri
-            val myFile = uriToFile(selectedImg, this@AddStoryActivity)
+            val myFile = Utils.uriToFile(selectedImg, this@AddStoryActivity)
             getFile = myFile
             binding.ivAddPhoto.setImageURI(selectedImg)
         }
@@ -141,7 +141,7 @@ class AddStoryActivity : AppCompatActivity() {
         binding.btnCamera.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             intent.resolveActivity(packageManager)
-            createTempFile(application).also {
+            Utils.createTempFile(application).also {
                 val photoURI: Uri = FileProvider.getUriForFile(
                     this@AddStoryActivity,
                     "com.intermediateandroid.storyapp",
@@ -171,7 +171,7 @@ class AddStoryActivity : AppCompatActivity() {
 
         binding.btnUpload.setOnClickListener {
             if (getFile != null) {
-                val file = reduceFileImage(getFile as File)
+                val file = Utils.reduceFileImage(getFile as File)
                 val description = binding.edAddDescription.text
                     .toString()
                     .trim()
@@ -246,7 +246,7 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val REQUIRED_PERMISSIONS = arrayOf(android.Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
 }
