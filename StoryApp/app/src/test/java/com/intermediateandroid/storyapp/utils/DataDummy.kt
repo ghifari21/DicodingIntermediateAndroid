@@ -4,7 +4,7 @@ import com.intermediateandroid.storyapp.data.model.Story
 import com.intermediateandroid.storyapp.data.remote.response.StoryResponse
 
 object DataDummy {
-    fun generateDummyStoryResponseWithoutLocation(): StoryResponse {
+    fun generateDummyStoryResponse(): StoryResponse {
         val items: MutableList<Story> = arrayListOf()
         for (i in 0..100) {
             val story = Story(
