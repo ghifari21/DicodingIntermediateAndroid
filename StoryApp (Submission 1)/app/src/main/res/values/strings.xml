@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="title_login">Login</string>
+    <string name="logo">Logo</string>
+    <string name="hint_email">Email Address</string>
+    <string name="empty_email">Enter your email address</string>
+    <string name="invalid_email">Enter a valid email address</string>
+    <string name="hint_password">Password</string>
+    <string name="invalid_password">Passwords must contain at least eight characters</string>
+    <string name="title_register">Register</string>
+    <string name="hint_name">Full Name</string>
+    <string name="success">Success!</string>
+    <string name="account_created">Your account has been created!</string>
+    <string name="login_success">You have successfully logged in.</string>
+    <string name="to_homepage">Go to Homepage</string>
+    <string name="empty_field">This field must be filled</string>
+    <string name="loading">Loading…</string>
+    <string name="title_name">Name</string>
+    <string name="title_description">Description</string>
+    <string name="title_logout">Logout</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_gallery">Gallery</string>
+    <string name="title_upload">Upload</string>
+    <string name="title_add_story">Add New Story</string>
+    <string name="title_detail_story">Detail Story</string>
+    <string name="empty_image">Please enter the image file first.</string>
+    <string name="success_upload">Story has been uploaded successfully.</string>
+</resources>
