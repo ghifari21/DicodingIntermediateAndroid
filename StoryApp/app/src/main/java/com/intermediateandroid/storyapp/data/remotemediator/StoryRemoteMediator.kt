@@ -1,6 +1,5 @@
 package com.intermediateandroid.storyapp.data.remotemediator
 
-import android.provider.MediaStore.Audio.Media
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState

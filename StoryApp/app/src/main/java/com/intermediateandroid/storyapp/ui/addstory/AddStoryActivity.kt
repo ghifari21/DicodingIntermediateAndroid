@@ -23,10 +23,7 @@ import com.google.android.gms.location.LocationServices
 import com.intermediateandroid.storyapp.R
 import com.intermediateandroid.storyapp.databinding.ActivityAddStoryBinding
 import com.intermediateandroid.storyapp.ui.main.MainActivity
-import com.intermediateandroid.storyapp.utils.Result
-import com.intermediateandroid.storyapp.utils.ViewModelFactory
-import com.intermediateandroid.storyapp.utils.createTempFile
-import com.intermediateandroid.storyapp.utils.uriToFile
+import com.intermediateandroid.storyapp.utils.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -234,10 +231,6 @@ class AddStoryActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun reduceFileImage(file: File): File {
-        return file
     }
 
     private fun loadingState(isLoading: Boolean) {

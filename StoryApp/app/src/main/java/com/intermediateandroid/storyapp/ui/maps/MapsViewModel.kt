@@ -2,10 +2,8 @@ package com.intermediateandroid.storyapp.ui.maps
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import com.intermediateandroid.storyapp.data.repository.StoryRepository
 import com.intermediateandroid.storyapp.data.repository.UserRepository
-import kotlinx.coroutines.launch
 
 class MapsViewModel(
     private val userRepository: UserRepository,
