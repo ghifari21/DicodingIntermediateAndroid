@@ -10,6 +10,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.intermediateandroid.storyapp.R
 import com.intermediateandroid.storyapp.data.model.Story
 import com.intermediateandroid.storyapp.databinding.ItemStoryBinding
 import com.intermediateandroid.storyapp.ui.detail.DetailActivity
@@ -35,6 +37,10 @@ class StoryListAdapter : PagingDataAdapter<Story, StoryListAdapter.MyViewHolder>
             binding.apply {
                 Glide.with(itemView.context)
                     .load(story.photoUrl)
+                    .apply(
+                        RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error
+                        )
+                    )
                     .into(ivItemPhoto)
 
                 tvItemName.text = story.name
