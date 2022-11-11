@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.intermediateandroid.storyapp.R
 import com.intermediateandroid.storyapp.databinding.ActivityDetailBinding
 import com.intermediateandroid.storyapp.utils.Result
@@ -40,6 +41,9 @@ class DetailActivity : AppCompatActivity() {
                         binding.apply {
                             Glide.with(this@DetailActivity)
                                 .load(it.data.photoUrl)
+                                .apply(
+                                    RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error)
+                                )
                                 .into(ivDetailPhoto)
 
                             tvDetailName.text = it.data.name
