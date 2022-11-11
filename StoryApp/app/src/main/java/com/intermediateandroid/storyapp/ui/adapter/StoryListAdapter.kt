@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.intermediateandroid.storyapp.data.model.Story
 import com.intermediateandroid.storyapp.databinding.ItemStoryBinding
 import com.intermediateandroid.storyapp.ui.detail.DetailActivity
+import com.intermediateandroid.storyapp.utils.Utils
+import java.util.TimeZone
 
 class StoryListAdapter : PagingDataAdapter<Story, StoryListAdapter.MyViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -37,6 +39,7 @@ class StoryListAdapter : PagingDataAdapter<Story, StoryListAdapter.MyViewHolder>
 
                 tvItemName.text = story.name
                 tvItemDescription.text = story.description
+                tvCreatedAt.text = Utils.formatDate(story.createdAt, TimeZone.getDefault().id)
             }
 
             itemView.setOnClickListener {
