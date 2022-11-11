@@ -5,13 +5,11 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
-import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import com.intermediateandroid.storyapp.R
 
 class PasswordEditText : AppCompatEditText {
@@ -36,19 +34,9 @@ class PasswordEditText : AppCompatEditText {
     private fun init() {
         lockIcon = ContextCompat.getDrawable(context, R.drawable.ic_lock_gray) as Drawable
 
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Do nothing.
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // Do nothing.
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                if (s.toString().length < 6) {
-                    error = context.getString(R.string.invalid_password)
-                }
+        addTextChangedListener(doAfterTextChanged {
+            if (it.toString().length < 6) {
+                error = context.getString(R.string.invalid_password)
             }
         })
     }

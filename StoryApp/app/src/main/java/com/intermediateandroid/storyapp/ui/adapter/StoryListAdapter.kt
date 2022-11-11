@@ -1,12 +1,10 @@
 package com.intermediateandroid.storyapp.ui.adapter
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,8 +12,10 @@ import com.bumptech.glide.Glide
 import com.intermediateandroid.storyapp.data.model.Story
 import com.intermediateandroid.storyapp.databinding.ItemStoryBinding
 import com.intermediateandroid.storyapp.ui.detail.DetailActivity
+import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
 
-class StoryListAdapter : ListAdapter<Story, StoryListAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryListAdapter : PagingDataAdapter<Story, StoryListAdapter.MyViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
@@ -23,7 +23,9 @@ class StoryListAdapter : ListAdapter<Story, StoryListAdapter.MyViewHolder>(DIFF_
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val story = getItem(position)
-        holder.bind(story)
+        if (story != null) {
+            holder.bind(story)
+        }
     }
 
     class MyViewHolder(private val binding: ItemStoryBinding) :
@@ -62,7 +64,6 @@ class StoryListAdapter : ListAdapter<Story, StoryListAdapter.MyViewHolder>(DIFF_
                     return oldStory.id == newStory.id
                 }
 
-                @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(oldStory: Story, newStory: Story): Boolean {
                     return oldStory == newStory
                 }

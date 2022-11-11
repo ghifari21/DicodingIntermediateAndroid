@@ -12,8 +12,9 @@ import com.intermediateandroid.storyapp.data.repository.UserRepository
 object Injection {
     fun provideStoryRepository(context: Context): StoryRepository {
         val apiService = ApiConfig.getApiService()
-        val dao = StoryDatabase.getInstance(context).storyDao()
-        return StoryRepository.getInstance(apiService, dao)
+        val database = StoryDatabase.getInstance(context)
+        val dao = database.storyDao()
+        return StoryRepository.getInstance(apiService, database, dao)
     }
 
     fun provideUserRepository(dataStore: DataStore<Preferences>): UserRepository {

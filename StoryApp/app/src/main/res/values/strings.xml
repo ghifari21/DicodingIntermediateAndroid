@@ -26,4 +26,7 @@
     <string name="title_detail_story">Detail Story</string>
     <string name="empty_image">Please enter the image file first.</string>
     <string name="success_upload">Story has been uploaded successfully.</string>
+    <string name="retry">Retry</string>
+    <string name="home">Home</string>
+    <string name="maps">Maps</string>
 </resources>

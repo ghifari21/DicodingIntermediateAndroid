@@ -30,9 +30,9 @@ data class Story(
 
     @field:ColumnInfo(name = "lat")
     @field:SerializedName("lat")
-    val lat: Float?,
+    val lat: Double?,
 
     @field:ColumnInfo(name = "lon")
     @field:SerializedName("lon")
-    val lon: Float?
+    val lon: Double?
 )

@@ -5,17 +5,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.intermediateandroid.storyapp.R
 import com.intermediateandroid.storyapp.databinding.ActivityMainBinding
+import com.intermediateandroid.storyapp.ui.adapter.LoadingStateAdapter
 import com.intermediateandroid.storyapp.ui.adapter.StoryListAdapter
 import com.intermediateandroid.storyapp.ui.addstory.AddStoryActivity
 import com.intermediateandroid.storyapp.ui.login.LoginActivity
-import com.intermediateandroid.storyapp.utils.Result
+import com.intermediateandroid.storyapp.ui.maps.MapsActivity
 import com.intermediateandroid.storyapp.utils.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +26,20 @@ class MainActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
     private val storyAdapter = StoryListAdapter()
+    private var isFabMenuClicked = false
+
+    private val fabExtendableClose: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.fab_extendable_close
+        )
+    }
+    private val fabExtendableOpen: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.fab_extendable_open
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -54,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
                 true
             }
-            else -> true
+            else -> false
         }
     }
 
@@ -71,50 +87,69 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
+        supportActionBar?.title = getString(R.string.home)
+
+        binding.apply {
+            fabAddStory.scaleX = 0.8f
+            fabAddStory.scaleY = 0.8f
+            fabMaps.scaleX = 0.8f
+            fabMaps.scaleY = 0.8f
+
+            fabMenu.setOnClickListener {
+                if (!isFabMenuClicked) {
+                    fabAddStory.animate().translationY(-resources.getDimension(R.dimen.pos_y_fab_add_story))
+                    fabMaps.animate().translationY(-resources.getDimension(R.dimen.pos_y_fab_map))
+                    fabMenu.startAnimation(fabExtendableOpen)
+                } else {
+                    fabAddStory.animate().translationY(0f)
+                    fabMaps.animate().translationY(0f)
+                    fabMenu.startAnimation(fabExtendableClose)
+                }
+                isFabMenuClicked = !isFabMenuClicked
+            }
+
+            fabAddStory.setOnClickListener {
+                val intent = Intent(this@MainActivity, AddStoryActivity::class.java)
+                startActivity(intent)
+            }
+
+            fabMaps.setOnClickListener {
+                val intent = Intent(this@MainActivity, MapsActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
         val layoutManager = LinearLayoutManager(this)
         binding.rvStory.layoutManager = layoutManager
         binding.rvStory.setHasFixedSize(true)
-        binding.rvStory.adapter = storyAdapter
-
-        binding.fabAddStory.setOnClickListener {
-            val intent = Intent(this@MainActivity, AddStoryActivity::class.java)
-            startActivity(intent)
-        }
+        binding.rvStory.adapter = storyAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                storyAdapter.retry()
+            }
+        )
     }
 
     private fun showStories(token: String) {
+        loadingState(true)
         viewModel.getStories(token).observe(this) {
-            if (it != null) {
-                when (it) {
-                    is Result.Loading -> {
-                        binding.apply {
-                            rvStory.visibility = View.INVISIBLE
-                            pbLoading.visibility = View.VISIBLE
-                            tvLoading.visibility = View.VISIBLE
-                        }
-                    }
-                    is Result.Success -> {
-                        binding.apply {
-                            rvStory.visibility = View.VISIBLE
-                            pbLoading.visibility = View.GONE
-                            tvLoading.visibility = View.GONE
-                        }
-                        storyAdapter.submitList(it.data)
-                    }
-                    is Result.Error -> {
-                        binding.apply {
-                            rvStory.visibility = View.INVISIBLE
-                            pbLoading.visibility = View.GONE
-                            tvLoading.visibility = View.GONE
-                        }
-                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+            loadingState(false)
+            storyAdapter.submitData(lifecycle, it)
         }
     }
 
-    companion object {
-        const val EXTRA_TOKEN = "extra_token"
+    private fun loadingState(isLoading: Boolean) {
+        if (isLoading) {
+            binding.apply {
+                rvStory.visibility = View.INVISIBLE
+                pbLoading.visibility = View.VISIBLE
+                tvLoading.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                rvStory.visibility = View.VISIBLE
+                pbLoading.visibility = View.GONE
+                tvLoading.visibility = View.GONE
+            }
+        }
     }
 }

@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.intermediateandroid.storyapp.data.model.RemoteKeys
 import com.intermediateandroid.storyapp.data.model.Story
 
-@Database(entities = [Story::class], version = 1, exportSchema = false)
+@Database(entities = [Story::class, RemoteKeys::class], version = 2, exportSchema = false)
 abstract class StoryDatabase : RoomDatabase() {
     abstract fun storyDao(): StoryDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object {
         @Volatile
@@ -18,7 +20,10 @@ abstract class StoryDatabase : RoomDatabase() {
                 instance ?: Room.databaseBuilder(
                     context.applicationContext,
                     StoryDatabase::class.java, "storyDB.db"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
+                    .also { instance = it }
             }
     }
 }

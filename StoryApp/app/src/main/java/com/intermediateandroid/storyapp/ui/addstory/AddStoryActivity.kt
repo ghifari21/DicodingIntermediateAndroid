@@ -1,9 +1,11 @@
 package com.intermediateandroid.storyapp.ui.addstory
 
+import android.Manifest
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.intermediateandroid.storyapp.R
 import com.intermediateandroid.storyapp.databinding.ActivityAddStoryBinding
 import com.intermediateandroid.storyapp.ui.main.MainActivity
@@ -34,7 +38,9 @@ import java.io.File
 class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddStoryBinding
     private lateinit var currentPhotoPath: String
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var getFile: File? = null
+    private var userLocation: Location? = null
 
     private val viewModel: AddStoryViewModel by viewModels {
         ViewModelFactory.getInstance(this)
@@ -62,6 +68,23 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    getMyLastLocation()
+                }
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    getMyLastLocation()
+                }
+                else -> {
+                    // Do something
+                }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -71,6 +94,9 @@ class AddStoryActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.title_add_story)
 
         askPermission()
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
         setupAction()
     }
 
@@ -80,6 +106,32 @@ class AddStoryActivity : AppCompatActivity() {
                 this,
                 REQUIRED_PERMISSIONS,
                 REQUEST_CODE_PERMISSIONS
+            )
+        }
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getMyLastLocation() {
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+                if (it != null) {
+                    userLocation = it
+                } else {
+                    // Do something.
+                }
+            }
+        } else {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
             )
         }
     }
@@ -139,21 +191,16 @@ class AddStoryActivity : AppCompatActivity() {
                     if (result != null) {
                         when (result) {
                             is Result.Loading -> {
-                                binding.apply {
-                                    pbLoading.visibility = View.VISIBLE
-                                    tvLoading.visibility = View.VISIBLE
-                                }
+                                loadingState(true)
                             }
                             is Result.Success -> {
-                                binding.apply {
-                                    pbLoading.visibility = View.GONE
-                                    tvLoading.visibility = View.GONE
-                                }
+                                loadingState(false)
                                 AlertDialog.Builder(this).apply {
                                     setTitle(getString(R.string.success))
                                     setMessage(getString(R.string.success_upload))
                                     setPositiveButton(getString(R.string.to_homepage)) { _, _ ->
-                                        val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
+                                        val intent =
+                                            Intent(this@AddStoryActivity, MainActivity::class.java)
                                         startActivity(intent)
                                         finish()
                                     }
@@ -162,10 +209,7 @@ class AddStoryActivity : AppCompatActivity() {
                                 }
                             }
                             is Result.Error -> {
-                                binding.apply {
-                                    pbLoading.visibility = View.GONE
-                                    tvLoading.visibility = View.GONE
-                                }
+                                loadingState(false)
                                 Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -177,6 +221,18 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun reduceFileImage(file: File): File {
         return file
+    }
+
+    private fun loadingState(isLoading: Boolean) {
+        binding.apply {
+            if (isLoading) {
+                pbLoading.visibility = View.VISIBLE
+                tvLoading.visibility = View.VISIBLE
+            } else {
+                pbLoading.visibility = View.GONE
+                tvLoading.visibility = View.GONE
+            }
+        }
     }
 
     companion object {

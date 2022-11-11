@@ -26,4 +26,7 @@
     <string name="title_detail_story">Detail Cerita</string>
     <string name="empty_image">Silakan masukkan berkas gambar terlebih dahulu.</string>
     <string name="success_upload">Cerita telah berhasil diunggah.</string>
+    <string name="retry">Muat Ulang</string>
+    <string name="home">Beranda</string>
+    <string name="maps">Peta</string>
 </resources>
