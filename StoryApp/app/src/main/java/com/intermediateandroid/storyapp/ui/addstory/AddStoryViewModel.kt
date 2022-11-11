@@ -14,8 +14,10 @@ class AddStoryViewModel(
     fun uploadStory(
         token: String,
         file: MultipartBody.Part,
-        description: RequestBody
-    ) = storyRepository.uploadStory(token, file, description)
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
+    ) = storyRepository.uploadStory(token, file, description, lat, lon)
 
     fun getAccount() = userRepository.getAccount().asLiveData()
 }

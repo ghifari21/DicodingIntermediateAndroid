@@ -23,10 +23,10 @@ import com.google.android.gms.location.LocationServices
 import com.intermediateandroid.storyapp.R
 import com.intermediateandroid.storyapp.databinding.ActivityAddStoryBinding
 import com.intermediateandroid.storyapp.ui.main.MainActivity
+import com.intermediateandroid.storyapp.utils.Result
 import com.intermediateandroid.storyapp.utils.ViewModelFactory
 import com.intermediateandroid.storyapp.utils.createTempFile
 import com.intermediateandroid.storyapp.utils.uriToFile
-import com.intermediateandroid.storyapp.utils.Result
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -80,7 +80,7 @@ class AddStoryActivity : AppCompatActivity() {
                     getMyLastLocation()
                 }
                 else -> {
-                    // Do something
+                    binding.swLocation.isChecked = false
                 }
             }
         }
@@ -123,7 +123,7 @@ class AddStoryActivity : AppCompatActivity() {
                 if (it != null) {
                     userLocation = it
                 } else {
-                    // Do something.
+                    binding.swLocation.isChecked = false
                 }
             }
         } else {
@@ -164,6 +164,14 @@ class AddStoryActivity : AppCompatActivity() {
             launcherIntentGallery.launch(chooser)
         }
 
+        binding.swLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                getMyLastLocation()
+            } else {
+                userLocation = null
+            }
+        }
+
         binding.btnUpload.setOnClickListener {
             if (getFile != null) {
                 val file = reduceFileImage(getFile as File)
@@ -171,23 +179,32 @@ class AddStoryActivity : AppCompatActivity() {
                     .toString()
                     .trim()
                     .toRequestBody("text/plain".toMediaType())
+                val lat =
+                    userLocation?.latitude?.toString()?.toRequestBody("text/plain".toMediaType())
+                val lon =
+                    userLocation?.longitude?.toString()?.toRequestBody("text/plain".toMediaType())
                 val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
                 val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                     "photo",
                     file.name,
                     requestImageFile
                 )
-                uploadStory(imageMultipart, description)
+                uploadStory(imageMultipart, description, lat, lon)
             } else {
                 Toast.makeText(this, getString(R.string.empty_image), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun uploadStory(file: MultipartBody.Part, description: RequestBody) {
+    private fun uploadStory(
+        file: MultipartBody.Part,
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
+    ) {
         viewModel.getAccount().observe(this) {
             if (it.token != "") {
-                viewModel.uploadStory(it.token, file, description).observe(this) { result ->
+                viewModel.uploadStory(it.token, file, description, lat, lon).observe(this) { result ->
                     if (result != null) {
                         when (result) {
                             is Result.Loading -> {

@@ -9,10 +9,8 @@
     <ImageView
         android:id="@+id/iv_add_photo"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="250dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,11 +20,11 @@
         android:id="@+id/btn_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/title_camera"
-        app:layout_constraintBottom_toTopOf="@+id/sw_location"
         app:layout_constraintEnd_toStartOf="@+id/btn_gallery"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_add_photo" />
 
     <Button
         android:id="@+id/btn_gallery"
@@ -42,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/edit_text_background"
@@ -84,16 +82,18 @@
         android:layout_marginTop="8dp"
         android:text="@string/loading"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/ed_add_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pb_loading" />
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/sw_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Share Location"
+        android:layout_marginTop="8dp"
+        android:text="@string/shareloc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="394dp" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_camera" />
 </androidx.constraintlayout.widget.ConstraintLayout>

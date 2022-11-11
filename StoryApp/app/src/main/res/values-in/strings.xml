@@ -29,4 +29,5 @@
     <string name="retry">Muat Ulang</string>
     <string name="home">Beranda</string>
     <string name="maps">Peta</string>
+    <string name="shareloc">Bagikan Lokasi</string>
 </resources>

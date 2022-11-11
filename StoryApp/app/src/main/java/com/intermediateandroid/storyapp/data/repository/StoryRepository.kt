@@ -80,11 +80,13 @@ class StoryRepository private constructor(
     fun uploadStory(
         token: String,
         file: MultipartBody.Part,
-        description: RequestBody
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
     ): LiveData<Result<StoryResponse>> {
         uploadResult.value = Result.Loading
 
-        val client = apiService.postStory("Bearer $token", file, description)
+        val client = apiService.postStory("Bearer $token", file, description, lat, lon)
         client.enqueue(object : Callback<StoryResponse> {
             override fun onResponse(call: Call<StoryResponse>, response: Response<StoryResponse>) {
                 if (response.isSuccessful) {
