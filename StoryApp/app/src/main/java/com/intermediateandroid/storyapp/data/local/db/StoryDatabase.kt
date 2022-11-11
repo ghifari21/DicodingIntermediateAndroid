@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.intermediateandroid.storyapp.data.model.RemoteKeys
 import com.intermediateandroid.storyapp.data.model.Story
 
-@Database(entities = [Story::class, RemoteKeys::class], version = 2, exportSchema = false)
+@Database(entities = [Story::class, RemoteKeys::class], version = 1, exportSchema = false)
 abstract class StoryDatabase : RoomDatabase() {
     abstract fun storyDao(): StoryDao
     abstract fun remoteKeysDao(): RemoteKeysDao
