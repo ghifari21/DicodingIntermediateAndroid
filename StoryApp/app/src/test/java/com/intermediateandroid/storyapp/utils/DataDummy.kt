@@ -2,7 +2,6 @@ package com.intermediateandroid.storyapp.utils
 
 import com.intermediateandroid.storyapp.data.model.Story
 import com.intermediateandroid.storyapp.data.model.User
-import com.intermediateandroid.storyapp.data.remote.response.LoginResponse
 import com.intermediateandroid.storyapp.data.remote.response.RegisterResponse
 import com.intermediateandroid.storyapp.data.remote.response.StoryResponse
 
@@ -40,6 +39,14 @@ object DataDummy {
         return RegisterResponse(
             true,
             "User Not Created"
+        )
+    }
+
+    fun generateDummySuccessLoginResponse(): User {
+        return User(
+            "id",
+            "name",
+            "token"
         )
     }
 }
