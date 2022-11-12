@@ -1,6 +1,7 @@
 package com.intermediateandroid.storyapp.utils
 
 import com.intermediateandroid.storyapp.data.model.Story
+import com.intermediateandroid.storyapp.data.remote.response.RegisterResponse
 import com.intermediateandroid.storyapp.data.remote.response.StoryResponse
 
 object DataDummy {
@@ -23,6 +24,20 @@ object DataDummy {
             false,
             "Stories fetched successfully",
             items
+        )
+    }
+
+    fun generateDummySuccessRegisterResponse(): RegisterResponse {
+        return RegisterResponse(
+            false,
+            "User Created"
+        )
+    }
+
+    fun generateDummyFailedRegisterResponse(): RegisterResponse {
+        return RegisterResponse(
+            true,
+            "User Not Created"
         )
     }
 }
