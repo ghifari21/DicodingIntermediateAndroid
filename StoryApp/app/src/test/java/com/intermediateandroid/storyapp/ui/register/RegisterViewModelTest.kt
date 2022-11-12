@@ -54,7 +54,7 @@ class RegisterViewModelTest {
 
     @Test
     fun `When Network Error Should Return Error`() {
-        val dummyResponse = DataDummy.generateDummyFailedRegisterResponse()
+        val dummyResponse = DataDummy.generateDummyErrorRegisterResponse()
         val expectedResponse = MutableLiveData<Result<RegisterResponse>>()
         expectedResponse.value = Result.Error(dummyResponse.message)
 

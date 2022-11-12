@@ -1,6 +1,8 @@
 package com.intermediateandroid.storyapp.utils
 
 import com.intermediateandroid.storyapp.data.model.Story
+import com.intermediateandroid.storyapp.data.model.User
+import com.intermediateandroid.storyapp.data.remote.response.LoginResponse
 import com.intermediateandroid.storyapp.data.remote.response.RegisterResponse
 import com.intermediateandroid.storyapp.data.remote.response.StoryResponse
 
@@ -10,7 +12,7 @@ object DataDummy {
         for (i in 0..100) {
             val story = Story(
                 "ID$i",
-                "gosty",
+                "name",
                 "dummy testing",
                 "https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/feature-1-kurikulum-global-3.png",
                 "2022-02-22T22:22:22Z",
@@ -34,7 +36,7 @@ object DataDummy {
         )
     }
 
-    fun generateDummyFailedRegisterResponse(): RegisterResponse {
+    fun generateDummyErrorRegisterResponse(): RegisterResponse {
         return RegisterResponse(
             true,
             "User Not Created"
