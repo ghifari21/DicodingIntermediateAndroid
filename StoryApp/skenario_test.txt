@@ -1,0 +1,68 @@
+Skenario Test
+===============
+1. MainViewModel
+    a. Ketika berhasil mendapatkan list stories
+        - Memastikan data tidak null
+        - Memastikan paging mendapatkan data list stories dengan benar
+        - Memastikan jumlah data yang didapatkan sudah benar
+    b. Ketika berhasil mendapatkan akun yang sudah login
+        - Memastikan user yang didapatkan tidak null
+        - Memastikan user yang didapatkan dari datastore benar
+    c. Ketika ingin menghapus akun yang tersimpan di datastore
+        - Memastikan method deleteAccount di UserRepository benar dipanggil
+
+2. LoginViewModel
+    a. Ketika user berhasil login
+        - Memastikan response yang didapatkan tidak null
+        - Memastikan response yang didapatkan Result.Success
+        - Memastikan data user yang didapatkan sudah benar
+    b. Ketika user gagal login
+        - Memastikan response yang didapatkan tidak null
+        - Memastikan response yang didapatkan Result.Error
+        - Memastikan pesan error yang didapatkan sudah benar
+    c. Ketika ingin menyimpan data user ke datastore
+        - Memastikan method saveAccount di UserRepository benar dipanggil
+
+3. RegisterViewModel
+    a. Ketika user berhasil register
+        - Memastikan response tidak null
+        - Memastikan response yang didapatkan Result.Success
+        - Memastikan pesan yang didapatkan sudah benar
+    b. Ketika user gagal register
+        - Memastikan response yang didapatkan tidak null
+        - Memastikan response yang didapatkan Result.Error
+        - Memastikan pesan error yang didapatkan sudah benar
+
+4. DetailViewModel
+    a. Ketika berhasil mendapatkan story
+        - Memastikan data tidak null
+        - Memastikan data yang didapatkan Result.Success
+        - Memastikan data yang didapatkan sudah benar
+    b. Ketika gagal mendapatkan story
+        - Memastikan response tidak null
+        - Memastikan response yang didapatkan Result.Error
+
+5. MapsViewModel
+    a. Ketika berhasil mendapatkan akun yang sudah login
+        - Memastikan user yang didapatkan tidak null
+        - Memastikan user yang didapatkan dari datastore benar
+    b. Ketika berhasil mendapatkan list stories dengan lokasi
+        - Memastikan data tidak null
+        - Memastikan data yang didapatkan Result.Success
+        - Memastikan banyak data sesuai
+        - Memastikan data yang didapatkan sudah benar
+        - Memastikan lat dan lon dari data yang didapatkan tidak null
+    c. Ketika gagal mendapatkan list stories dengan lokasi
+        - Memastikan response tidak null
+        - Memastikan response yang didapatkan Result.Error
+
+6. AddStoryViewModel
+    a. Ketika user berhasil mengupload story
+        - Memastikan response yang didapatkan tidak null
+        - Memastikan response yang didapatkan Result.Success
+    b. Ketika user gagal mengupload story
+        - Memastikan response yang didapatkan tidak null
+        - Memastikan response yang didapatkan Result.Error
+    c. Ketika berhasil mendapatkan akun yang sudah login
+        - Memastikan user yang didapatkan tidak null
+        - Memastikan user yang didapatkan dari datastore benar
