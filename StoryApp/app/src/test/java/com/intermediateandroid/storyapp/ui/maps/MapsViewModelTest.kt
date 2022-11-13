@@ -56,7 +56,6 @@ class MapsViewModelTest {
         Mockito.verify(userRepository).getAccount()
         assertNotNull(actualUser)
         assertEquals(dummyUser, actualUser)
-        assertEquals(dummyUser.userId, actualUser.userId)
     }
 
     @Test

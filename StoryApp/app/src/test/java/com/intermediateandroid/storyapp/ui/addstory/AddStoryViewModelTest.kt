@@ -73,7 +73,6 @@ class AddStoryViewModelTest {
         Mockito.verify(storyRepository).uploadStory(TOKEN, imageMultipart, description, null, null)
         assertNotNull(actualResponse)
         assertTrue(actualResponse is Result.Success)
-        assertEquals(dummyResponse, (actualResponse as Result.Success).data)
     }
 
     @Test
@@ -113,7 +112,6 @@ class AddStoryViewModelTest {
         Mockito.verify(userRepository).getAccount()
         assertNotNull(actualUser)
         assertEquals(dummyUser, actualUser)
-        assertEquals(dummyUser.userId, actualUser.userId)
     }
 
     private companion object {
