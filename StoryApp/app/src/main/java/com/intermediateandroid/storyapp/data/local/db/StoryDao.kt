@@ -7,7 +7,7 @@ import com.intermediateandroid.storyapp.data.model.Story
 
 @Dao
 interface StoryDao {
-    @Query("SELECT * FROM story ORDER BY createdAt DESC")
+    @Query("SELECT * FROM story")
     fun getStories(): PagingSource<Int, Story>
 
     @Query("SELECT * FROM story WHERE id = :id LIMIT 1")
