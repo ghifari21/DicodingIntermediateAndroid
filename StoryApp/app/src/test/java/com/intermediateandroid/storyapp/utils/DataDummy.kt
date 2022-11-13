@@ -28,6 +28,28 @@ object DataDummy {
         )
     }
 
+    fun generateDummyStoryResponseWithLocation(): StoryResponse {
+        val items: MutableList<Story> = arrayListOf()
+        for (i in 0..100) {
+            val story = Story(
+                "ID$i",
+                "name",
+                "dummy testing",
+                "https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/feature-1-kurikulum-global-3.png",
+                "2022-02-22T22:22:22Z",
+                -6.8957643,
+                107.6338462,
+            )
+            items.add(story)
+        }
+
+        return StoryResponse(
+            false,
+            "Stories fetched successfully",
+            items
+        )
+    }
+
     fun generateDummySuccessRegisterResponse(): RegisterResponse {
         return RegisterResponse(
             false,
