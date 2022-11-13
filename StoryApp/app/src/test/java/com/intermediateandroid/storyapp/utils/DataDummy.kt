@@ -49,4 +49,16 @@ object DataDummy {
             "token"
         )
     }
+
+    fun generateDummyStory(): Story {
+        return Story(
+            "id",
+            "name",
+            "ini deskripsi",
+            "https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/feature-1-kurikulum-global-3.png",
+            "2022-02-22T22:22:22Z",
+            null,
+            null
+        )
+    }
 }
