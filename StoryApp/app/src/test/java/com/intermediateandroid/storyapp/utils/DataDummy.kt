@@ -83,4 +83,12 @@ object DataDummy {
             null
         )
     }
+
+    fun generateDummyUploadResponse(): StoryResponse {
+        return StoryResponse(
+            false,
+            "Success",
+            null
+        )
+    }
 }
