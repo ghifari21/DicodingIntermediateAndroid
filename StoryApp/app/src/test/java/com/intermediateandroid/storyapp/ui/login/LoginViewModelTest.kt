@@ -39,7 +39,7 @@ class LoginViewModelTest {
 
     @Test
     fun `When User Login Should Not Null And Return Success`() {
-        val dummyUser = DataDummy.generateDummySuccessLoginResponse()
+        val dummyUser = DataDummy.generateDummyUser()
         val expectedUser = MutableLiveData<Result<User>>()
         expectedUser.value = Result.Success(dummyUser)
 
@@ -71,7 +71,7 @@ class LoginViewModelTest {
 
     @Test
     fun `When Login Success Should Save User`() = runTest {
-        val dummyUser = DataDummy.generateDummySuccessLoginResponse()
+        val dummyUser = DataDummy.generateDummyUser()
         viewModel.saveAccount(dummyUser)
         Mockito.verify(userRepository).saveAccount(dummyUser)
     }
