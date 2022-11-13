@@ -42,7 +42,7 @@ object DataDummy {
         )
     }
 
-    fun generateDummySuccessLoginResponse(): User {
+    fun generateDummyUser(): User {
         return User(
             "id",
             "name",
